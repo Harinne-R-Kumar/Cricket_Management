@@ -1,0 +1,80 @@
+<!-- cricket_management/cricket_app/templates/team_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teams</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #left-frame {
+            width: 20%;
+            background-color: #483d8b;
+            color: white;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #right-frame {
+            flex: 1;
+            background-color: white;
+            color: #483d8b;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #483d8b;
+        }
+
+        a {
+            text-decoration: none;
+            color: #483d8b;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #1e1a41;
+        }
+
+        .team-container {
+            background-color: #f2f2f2;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="left-frame">
+        <h1 style="color:white">Navigation</h1>
+        <a href="{% url 'team_list' %}" style="color:white">Teams</a>
+        <a href="{% url 'player_list' %}" style="color:white">Players</a>
+        <a href="{% url 'points_table' %}" style="color:white">Points Table</a>
+        <a href="{% url 'home' %}" style="color:white">Home</a>
+    </div>
+    <div id="right-frame">
+        <h1>Teams</h1>
+        {% for team in teams %}
+          <div class="team-container">
+            <a href="{% url 'team_detail' pk=team.pk %}">{{ team.name }}</a> -
+            <a href="{% url 'team_edit' pk=team.pk %}">Edit</a> -
+            <a href="{% url 'team_delete' pk=team.pk %}">Delete</a>
+          </div>
+        {% endfor %}
+        <p><a href="{% url 'team_create' %}">Create New Team</a></p>
+        <p><a href="{% url 'match_list' %}">Go to Match Page</a></p>
+        <p><a href="{% url 'home' %}">Home</a></p>
+    </div>
+</body>
+</html>

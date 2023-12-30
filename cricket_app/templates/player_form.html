@@ -1,0 +1,93 @@
+<!-- cricket_management/cricket_app/templates/player_form.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create/Edit Player</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        #container {
+            display: flex;
+            height: 100vh;
+        }
+
+        #left-frame {
+            background-color: #483d8b;
+            color: white;
+            padding: 20px;
+            width: 20%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #right-frame {
+            flex: 1;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #483d8b;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        button {
+            background-color: #483d8b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #483d8b;
+        }
+
+        p {
+            margin-top: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="left-frame">
+             <h3>Navigation</h3>
+            <ul>
+                <li><a href="{% url 'team_list' %}">Teams</a></li>
+                <li><a href="{% url 'player_list' %}">Players</a></li>
+                <li><a href="{% url 'points_table' %}">Points Table</a></li>
+            </ul>
+        </div>
+        <div id="right-frame">
+            <h2>Create/Edit Player</h2>
+            <form method="POST" action="">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Save</button>
+            </form>
+            <p><a href="{% url 'player_list' %}">Back to Players</a></p>
+            <p><a href="{% url 'home' %}">Home</a></p>
+        </div>
+    </div>
+</body>
+</html>

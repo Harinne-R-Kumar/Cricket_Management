@@ -1,0 +1,104 @@
+<!-- cricket_management/cricket_app/templates/player_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Players</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2ebf3;
+            color: #483d8b;
+        }
+
+        #container {
+            display: flex;
+            height: 100vh;
+        }
+
+        #left-frame {
+            width: 20%;
+            background-color: #483d8b;
+            padding: 20px;
+        }
+
+        #right-frame {
+            flex: 1;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #e5e3e1;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        .team-container {
+            margin-bottom: 20px;
+        }
+
+        .team-name {
+            font-size: 1.2em;
+            color: #483d8b;
+        }
+
+        .player-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .player-list-item {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="left-frame">
+            <h1>Navigation</h1>
+            <p><a href="{% url 'home' %}">Home</a></p>
+            <p><a href="{% url 'team_list' %}">Teams</a></p>
+            <p><a href="{% url 'player_list' %}">Players</a></p>
+            <p><a href="{% url 'points_table' %}">Points Table</a></p>
+        </div>
+        <div id="right-frame">
+            <h1 style="color:#483d8b">Players</h1>
+
+            {% regroup players by team.name as team_list %}
+
+            {% for team in team_list %}
+                <div class="team-container">
+                    <h2 class="team-name">{{ team.grouper }}</h2>
+                    <ul class="player-list">
+                        {% for player in team.list %}
+                            <li class="player-list-item">
+                                <a href="{% url 'player_detail' pk=player.pk %}" style="color:#483d8b">{{ player.name }} </a> -
+                                <a href="{% url 'player_edit' pk=player.pk %}" style="color:#483d8b">Edit</a> -
+                                <a href="{% url 'player_delete' pk=player.pk %}" style="color:#483d8b">Delete</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+
+            <p><a href="{% url 'player_create' %}" style="color:#483d8b">Create New Player</a></p>
+        </div>
+    </div>
+</body>
+</html>

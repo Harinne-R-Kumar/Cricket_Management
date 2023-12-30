@@ -1,0 +1,117 @@
+<!-- cricket_management/cricket_app/templates/match_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match List</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;/* Set the body height to full viewport height */
+        }
+
+        #left-frame {
+            flex: 1;
+            background-color: #483d8b;
+            color: white;
+            padding: 20px;
+            width:20%;
+            height: 100%; /* Set left-frame height to full viewport height */
+        }
+
+        #right-frame {
+            flex: 2;
+            background-color: white;
+            color: #483d8b;
+            padding: 20px;
+            height: 100%; /* Set right-frame height to full viewport height */
+            overflow-y: auto; /* Add scrollbar if content exceeds viewport height */
+        }
+
+        h1 {
+            color: #483d8b;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #483d8b;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 20px;
+            font-size: 16px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #483d8b;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div id="left-frame">
+
+        <h1 style="color:white">Navigation</h1>
+        <ul>
+            <li><a href="{% url 'team_list' %}" style="color:white">Teams</a></li>
+            <li><a href="{% url 'player_list' %}" style="color:white">Players</a></li>
+            <li><a href="{% url 'points_table' %}" style="color:white">Points Table</a></li>
+            <li><a href="{% url 'home' %}" style="color:white">Home</a></li>
+        </ul>
+    </div>
+    <div id="right-frame">
+        <h1>Match List</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Teams</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for match in matches|dictsortreversed:"date" %}
+                    <tr>
+                        <td>{{ match.date }}</td>
+                        <td>{{ match.team1 }} vs {{ match.team2 }}</td>
+                        <td>
+                            <a href="{% url 'match_detail' pk=match.pk %}" style="color:#483d8b">View</a> -
+                            <a href="{% url 'match_edit' pk=match.pk %}" style="color:#483d8b">Edit</a> -
+                            <a href="{% url 'match_delete' pk=match.pk %}" style="color:#483d8b">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p><a href="{% url 'match_create' %}" style="color:#483d8b">Create New Match</a></p>
+        <p><a href="{% url 'home' %}" style="color:#483d8b">Home</a></p>
+    </div>
+</body>
+</html>

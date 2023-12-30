@@ -1,0 +1,96 @@
+<!-- cricket_management/cricket_app/templates/team_form.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create/Edit Team</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        #container {
+            display: flex;
+            height: 100vh;
+        }
+
+        #left-frame {
+            flex: 1;
+            background-color: #483d8b;
+            width:20%
+            color: white;
+            padding: 20px;
+        }
+
+        #right-frame {
+            flex: 3;
+            background-color: white;
+            color: #483d8b;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #483d8b;
+        }
+
+        form {
+            width: 60%;
+            margin: 0 auto;
+        }
+
+        button {
+            background-color: #483d8b;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #483d8b;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+            margin-right: 20px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        p {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="left-frame">
+
+            <h2 style="color:white">Navigation</h2>
+            <p><a href="{% url 'team_list' %}">Teams</a></p>
+            <p><a href="{% url 'player_list' %}">Players</a></p>
+            <p><a href="{% url 'points_table' %}">Points Table</a></p>
+            <p><a href="{% url 'home' %}">Home</a></p>
+        </div>
+        <div id="right-frame">
+            <h2>Create/Edit Team</h2>
+            <form method="POST" enctype="multipart/form-data" action="">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Save</button>
+            </form>
+            <p><a href="{% url 'team_list' %}">Back to Teams</a></p>
+            <p><a href="{% url 'home' %}">Home</a></p>
+        </div>
+    </div>
+</body>
+</html>

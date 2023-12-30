@@ -1,0 +1,86 @@
+<!-- cricket_management/cricket_app/templates/match_form.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create/Edit Match</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family:'Arial', sans-serif;
+        }
+
+        #left-frame {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 20%;
+            background-color: #483d8b;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #right-frame {
+            position: absolute;
+            top: 0;
+            left: 20%;
+            height: 100%;
+            width: 80%;
+            background-color: white;
+            color: #483d8b;
+            padding: 20px;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        h1 {
+            color: #483d8b;
+        }
+
+        form {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        form button {
+            background-color: #483d8b;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        p a {
+            color: #483d8b;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="left-frame">
+
+        <h2>Navigation</h2>
+        <a href="{% url 'team_list' %}">Teams</a>
+        <a href="{% url 'player_list' %}">Players</a>
+        <a href="{% url 'points_table' %}">Points Table</a>
+        <a href="{% url 'home' %}">Home</a>
+    </div>
+
+    <div id="right-frame">
+        <h1>Create/Edit Match</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save</button>
+        </form>
+        <p><a href="{% url 'match_list' %}">Back to Match List</a></p>
+    </div>
+</body>
+</html>

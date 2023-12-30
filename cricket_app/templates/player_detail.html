@@ -1,0 +1,77 @@
+<!-- cricket_management/cricket_app/templates/player_detail.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Detail</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            height: 100vh;
+        }
+
+        #left-frame {
+            width: 20%;
+            background-color: #483d8b;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #right-frame {
+            flex: 1;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #483d8b;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="left-frame">
+
+        <h2>Navigation</h2>
+        <ul>
+            <li><a href="{% url 'team_list' %}">Teams</a></li>
+            <li><a href="{% url 'player_list' %}">Players</a></li>
+            <li><a href="{% url 'points_table' %}">Points Table</a></li>
+        </ul>
+        <p><a href="{% url 'home' %}">Home</a></p>
+    </div>
+    <div id="right-frame">
+        <h1>{{ player.name }}</h1>
+        <p>Team: {{ player.team }}</p>
+        <p>Role: {{ player.role }}</p>
+        <p>
+            <a href="{% url 'player_edit' pk=player.pk %}" style="color:#483d8b">Edit</a> -
+            <a href="{% url 'player_delete' pk=player.pk %}"style="color:#483d8b">Delete</a> -
+            <a href="{% url 'player_list' %}"style="color:#483d8b">Back to Players</a>
+        </p>
+        <p><a href="{% url 'home' %}">Home</a></p>
+    </div>
+</body>
+</html>

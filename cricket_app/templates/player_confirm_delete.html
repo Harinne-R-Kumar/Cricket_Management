@@ -1,0 +1,93 @@
+<!-- cricket_management/cricket_app/templates/player_confirm_delete.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Delete</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .left-frame {
+            flex: 1;
+            background-color: #483d8b;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            width:20%
+        }
+
+        .right-frame {
+            flex: 4;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #483d8b;
+        }
+
+        p {
+            color: #2e2e2e;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #483d8b;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #483d8b;
+        }
+
+        a {
+            text-decoration: none;
+            color: #f4eff5;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #483d8b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-frame">
+
+            <h2 style="color:white" >Navigation</h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'team_list' %}">Teams</a></li>
+                <li><a href="{% url 'player_list' %}">Players</a></li>
+                <li><a href="{% url 'points_table' %}">Points Table</a></li>
+            </ul>
+        </div>
+        <div class="right-frame">
+            <h2>Confirm Delete</h2>
+            <p>Are you sure you want to delete "{{ object.name }}"?</p>
+            <form method="post" action="">
+                {% csrf_token %}
+                <button type="submit">Yes, delete</button>
+            </form>
+            <p><a href="{% url 'player_list' %}">Cancel</a></p>
+        </div>
+    </div>
+</body>
+</html>

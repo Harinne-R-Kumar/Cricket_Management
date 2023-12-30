@@ -1,0 +1,193 @@
+<!-- cricket_management/cricket_app/templates/points_table.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Management System</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #2e2e2e;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+
+        #left-frame, #middle-frame, #right-frame {
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        #left-frame {
+            flex: 0.2; /* Adjust the width by changing the flex value */
+            background-color: #483d8b;
+            color: white;
+        }
+
+        #middle-frame {
+            flex: 0.5; /* Adjust the width by changing the flex value */
+            background-color: #fff;
+        }
+
+        #right-frame {
+            flex: 0.3; /* Adjust the width by changing the flex value */
+            background-color: #eee;
+        }
+
+        h1 {
+            color: #483d8b;
+        }
+
+        table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #483d8b;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            border-radius: 50%;
+            max-width: 50px;
+            height: auto;
+            display: block;
+            margin: auto;
+        }
+
+        a {
+            text-decoration: none;
+            color: #483d8b;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #483d8b;
+        }
+
+        canvas {
+            max-width: 100%;
+            margin-top: 20px;
+        }
+
+        #dialogue-box {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="left-frame">
+        <h1 style="color:white">Cricket Management System</h1>
+        <div class="nav-links">
+            <ul>
+                <li><a href="{% url 'team_list' %}" style="color:white">Teams</a></li>
+                <li><a href="{% url 'player_list' %}" style="color:white">Players</a></li>
+                <li><a href="{% url 'points_table' %}" style="color:white">Points Table</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="middle-frame">
+        <h1>Points Table</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>LOGO</th>
+                    <th>TEAM</th>
+                    <th>MATCHES</th>
+                    <th>WON</th>
+                    <th>LOST</th>
+                    <th>DRAW</th>
+                    <th>POINTS</th>
+                    <th>ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in points_table_data %}
+                    <tr>
+                        <td>
+                            {% if row.logo %}
+                                <img src="{% static 'team_logos/' %}{{ row.logo }}" alt="{{ row.team }} Logo">
+                            {% else %}
+                                No logo available
+                            {% endif %}
+                        </td>
+                        <td>{{ row.team }}</td>
+                        <td>{{ row.matches_played }}</td>
+                        <td>{{ row.matches_won }}</td>
+                        <td>{{ row.matches_lost }}</td>
+                        <td>{{ row.matches_drawn }}</td>
+                        <td>{{ row.points }}</td>
+                        <td>
+                            <a href="{% url 'update_points' team_name=row.team %}">Win a Match</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Bar Chart -->
+        <canvas id="pointsChart"></canvas>
+        <script>
+
+            var ctx = document.getElementById('pointsChart').getContext('2d');
+            var pointsData = {
+                labels: [{% for row in points_table_data %}"{{ row.team }}",{% endfor %}],
+                datasets: [{
+                    label: 'Points',
+                    data: [{% for row in points_table_data %}{{ row.points }},{% endfor %}],
+                    backgroundColor: 'rgba(72, 61, 139, 0.7)',
+                    borderColor: 'rgba(72, 61, 139, 1)',
+                    borderWidth: 1
+                }]
+            };
+            var myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: pointsData,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+
+    <div id="right-frame">
+        <!-- Top 3 Teams Dialogue Box -->
+        <div id="dialogue-box">
+            <h2>Top 3 Teams</h2>
+            <ul>
+                {% for row in points_table_data|slice:"3" %}
+                    <li>{{ row.team }} - {{ row.points }} points</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!-- cricket_management/cricket_app/templates/team_confirm_delete.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Delete</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #483d8b;
+            color: #483d8b;
+        }
+
+        h2 {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .left-frame {
+            flex: 1;
+            background-color: #483d8b;
+            padding: 20px;
+            text-align: center;
+            width:20%
+        }
+
+        .left-frame a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .right-frame {
+            flex: 4;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        p {
+            margin-top: 20px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #483d8b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #483d8b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-frame">
+
+            <h2>Navigation</h2>
+            <a href="{% url 'team_list' %}">Teams</a>
+            <a href="{% url 'player_list' %}">Players</a>
+            <a href="{% url 'points_table' %}">Points Table</a>
+            <!-- Add more navigation links as needed -->
+        </div>
+        <div class="right-frame">
+            <h2 style="color:#483d8b">Confirm Delete</h2>
+            <p style="color:#483d8b">Are you sure you want to delete "{{ object.name }}"?</p>
+            <form method="post" action="">
+                {% csrf_token %}
+                <button type="submit">Yes, delete</button>
+            </form>
+            <p><a href="{% url 'team_list' %}" style="color:#483d8b">Cancel</a></p>
+        </div>
+    </div>
+</body>
+</html>

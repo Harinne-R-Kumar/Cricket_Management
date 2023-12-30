@@ -1,0 +1,107 @@
+<!-- cricket_management/cricket_app/templates/team_detail.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ team.name }} Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #2e2e2e;
+            display: flex;
+            height: 100vh; /* Make the body full height */
+        }
+
+        h1 {
+            text-align: center;
+            color: #483d8b;
+        }
+
+        #container {
+            display: flex;
+            flex: 1;
+        }
+
+        #left-frame {
+            width: 20%;
+            padding: 20px;
+            background-color: #483d8b; /* Purple background */
+            color: white; /* White font */
+            height: 100%; /* Make the left frame full height */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+
+        #right-frame {
+            flex: 1;
+            padding: 20px;
+            background-color: white; /* White background */
+            color: #483d8b; /* Purple font */
+            display: flex;
+            flex-direction: column;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+            border: 3px solid #fff;
+            border-radius: 10px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #483d8b; /* Purple font */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="left-frame">
+
+            {% if team.logo %}
+                <img src="{{ team.logo.url }}" alt="{{ team.name }} Logo">
+            {% else %}
+                <p>No logo available</p>
+            {% endif %}
+
+            <h2 style="color:white">Navigation</h2>
+            <ul>
+                <li><a href="{% url 'team_list' %}" style="color:white">Team List</a></li>
+                <!-- Add more navigation links as needed -->
+            </ul>
+        </div>
+
+        <div id="right-frame">
+            <h1>{{ team.name }} Details</h1>
+            <p>Country: {{ team.country }}</p>
+
+            <h2>Players:</h2>
+            <ul>
+                {% for player in team.player_set.all %}
+                    <li>{{ player.name }} - {{ player.role }}</li>
+                {% endfor %}
+            </ul>
+
+            <p><a href="{% url 'team_list' %}" style="color:#483d8b">Back to Team List</a></p>
+        </div>
+    </div>
+</body>
+</html>

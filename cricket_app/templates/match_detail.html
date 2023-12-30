@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Delete Match</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #483d8b;
+            color: white;
+            display: flex;
+            height: 100vh;
+        }
+
+        #left-frame {
+            flex: 1;
+            background-color: #483d8b;
+            padding: 20px;
+            text-align: center;
+            width: 20%;
+        }
+
+        #right-frame {
+            flex: 4;
+            background-color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: white;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        form {
+            display: inline-block;
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #483d8b;
+        }
+
+        button {
+            background-color: #483d8b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="left-frame">
+
+        <h1>Navigation</h1>
+        <ul>
+            <li><a href="{% url 'match_list' %}">Match List</a></li>
+        </ul>
+    </div>
+    <div id="right-frame">
+        <h1 style="color:#483d8b">Confirm Match Result</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="winning_team">Which team won the match?</label>
+            {{ form.winning_team }}
+
+            <label for="losing_team">Which team lost the match?</label>
+            {{ form.losing_team }}
+
+            <button type="submit">Confirm</button>
+        </form>
+
+        <p><a href="{% url 'home' %}">Home</a></p>
+    </div>
+</body>
+</html>
